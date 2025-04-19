@@ -68,4 +68,4 @@ class ThompsonSamplingAgent(BaseAgent):
     # The variance of the Beta distribution is alpha * beta / ((alpha + beta)^2 * (alpha + beta + 1)), which measures the uncertainty about the reward probability.
     # Thompson Sampling works by sampling from the Beta distributions for each action and choosing the action with the highest sample value.
     # This approach balances exploration and exploitation by leveraging the Beta distribution's properties to balance the exploration-exploitation trade-off.
-    
+    # Comments
