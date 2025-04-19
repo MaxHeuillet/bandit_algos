@@ -12,18 +12,30 @@ def plot_regret_with_confidence(agents, regret, confidence_intervals, config, en
         config: Configuration dictionary
         env_name: Name of the environment (for file naming)
     """
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(12, 8))
+    
+    # Define colors for each agent
+    colors = {
+        'EpsilonGreedy': 'blue',
+        'UCB': 'green',
+        'ThompsonSampling': 'red'
+    }
     
     for agent in agents:
-        plt.plot(regret[agent.name], label=agent.name)
-        for ci_name, (lower, upper) in confidence_intervals[agent.name].items():
-            plt.fill_between(range(len(regret[agent.name])), lower, upper, alpha=0.2,
-                           label=f'{ci_name} CI')
+        agent_color = colors.get(agent.name, 'black')
+        # Plot the regret curve
+        plt.plot(regret[agent.name], label=agent.name, linewidth=2, color=agent_color)
+        
+        # Plot confidence interval with matching color
+        lower, upper = confidence_intervals[agent.name]["95%"]
+        plt.fill_between(range(len(regret[agent.name])), lower, upper, 
+                        alpha=0.2, color=agent_color, label=f'{agent.name} 95% CI')
     
-    plt.xlabel('Steps')
-    plt.ylabel('Cumulative Regret')
-    plt.title(f'Regret with Confidence Intervals - {env_name} Environment')
-    plt.legend()
+    plt.xlabel('Steps', fontsize=12)
+    plt.ylabel('Cumulative Regret', fontsize=12)
+    plt.title(f'Regret with 95% Confidence Interval - {env_name} Environment', fontsize=14)
+    plt.grid(True, linestyle='--', alpha=0.7)
+    plt.legend(fontsize=10)
     
     # Create plots directory if it doesn't exist
     plots_dir = config['paths']['plots_dir']

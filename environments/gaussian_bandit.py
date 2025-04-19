@@ -36,6 +36,9 @@ class GaussianBandit(BaseEnvironment):
         self._initial_means = np.copy(self.means)
         self._initial_stds = np.copy(self.stds)
         
+        # Store the optimal action index
+        self._optimal_action = np.argmax(self.means)
+        
     def pull(self, action):
         """
         Pull the specified arm and return the reward.
@@ -51,7 +54,10 @@ class GaussianBandit(BaseEnvironment):
         """
         if not (0 <= action < self.action_count):
             raise ValueError(f"Action {action} is out of bounds. Must be between 0 and {self.action_count - 1}")
-        return float(np.random.normal(self.means[action], self.stds[action]))
+        
+        # Generate reward and ensure it's non-negative
+        reward = np.random.normal(self.means[action], self.stds[action])
+        return float(max(0, reward))  # Ensure non-negative rewards
         
     def optimal_reward(self):
         """
@@ -60,7 +66,7 @@ class GaussianBandit(BaseEnvironment):
         Returns:
             float: The maximum mean among all actions.
         """
-        return float(np.max(self.means))
+        return float(self.means[self._optimal_action])
         
     def step(self):
         """
@@ -73,4 +79,5 @@ class GaussianBandit(BaseEnvironment):
         Reset the environment to its initial state.
         """
         self.means = np.copy(self._initial_means)
-        self.stds = np.copy(self._initial_stds) 
+        self.stds = np.copy(self._initial_stds)
+        self._optimal_action = np.argmax(self.means) 
