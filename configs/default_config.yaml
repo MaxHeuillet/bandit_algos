@@ -1,0 +1,22 @@
+seed: 42
+save_path: "./results"
+
+work_dir: "./work_dir/"
+scratch_model_path: "./work_dir/models/"
+save_model_dir: "./work_dir/tmp/models/trained_models/${project_name}/${exp_name}"
+HF_token: "TODO" 
+download_data_path: "./work_dir/data/"
+
+
+agents:
+  epsilon_greedy:
+    epsilon: 0.1
+  gradient_bandit:
+    alpha: 0.1
+    baseline: true
+  llm_agent:
+    model: "gpt-4.1-nano"
+    temperature: 0.0
+    max_retries: 3
+    timeout: 30
+    max_history_length: 100
