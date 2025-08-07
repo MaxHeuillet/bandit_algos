@@ -17,34 +17,24 @@ class BernoulliBandit(BaseEnvironment):
             probs (list or np.array): Optional array of probabilities for each action.
         """
         super().__init__()
-        if probs is not None:
-            # Convert probs to numpy array if it's a list
-            probs = np.array(probs, dtype=float)
-            if len(probs) != n_actions:
-                raise ValueError(f"Number of probabilities ({len(probs)}) must match number of actions ({n_actions})")
-            if not np.all((probs >= 0) & (probs <= 1)):
-                raise ValueError("All probabilities must be between 0 and 1")
-            self._probs = probs
-        else:
-            self._probs = np.random.random(n_actions)
-            
+        self._probs = probs
         self._initial_probs = np.copy(self._probs)
         self.action_count = n_actions
         
     def pull(self, action):
         """
-        Simulates pulling a lever (taking an action) and returns a reward.
-
-        Args:
-            action (int): The index of the action to take.
-
-        Returns:
-            float: 1.0 if a random number is less than the action's probability, 0.0 otherwise.
+        Simulates pulling a lever (taking an action) and returns both:
+        - The reward from the selected action
+        - The reward that would have been obtained by pulling the optimal arm
+        (using a single random draw to avoid double sampling variance)
         """
-        if not (0 <= action < self.action_count):
-            raise ValueError(f"Action {action} is out of bounds. Must be between 0 and {self.action_count - 1}")
 
-        return float(np.random.random() < self._probs[action])
+        rand = np.random.random()  # One draw for both
+
+        reward_action = float(rand < self._probs[action])
+        reward_optimal = float(rand < np.max(self._probs))
+
+        return reward_action, reward_optimal
 
     def optimal_reward(self):
         """
@@ -53,9 +43,9 @@ class BernoulliBandit(BaseEnvironment):
         Returns:
             float: The maximum probability among all actions.
         """
-        return float(np.max(self._probs))
+        return np.max(self._probs)
 
-    def step(self):
+    def step(self, action):
         """
         Used in non-stationary versions of the bandit to change the probabilities.
         This implementation is stationary, so this method does nothing.

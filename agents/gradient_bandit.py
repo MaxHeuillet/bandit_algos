@@ -17,7 +17,7 @@ class GradientBanditAgent(BaseAgent):
     stochastic gradient ascent to maximize the expected reward.
     """
     
-    def __init__(self, alpha=0.1, baseline=True):
+    def __init__(self, config, ):
         """
         Initialize the Gradient Bandit agent.
         
@@ -26,8 +26,8 @@ class GradientBanditAgent(BaseAgent):
             baseline (bool): Whether to use the average reward as a baseline.
         """
         super().__init__("GradientBandit")
-        self.alpha = alpha
-        self.baseline = baseline
+        self.alpha = config.agents.gradient_bandit.alpha
+        self.baseline = config.agents.gradient_bandit.baseline
         self.preferences = None
         self.average_reward = 0.0
         self.step_count = 0

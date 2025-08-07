@@ -3,4 +3,37 @@ matplotlib
 omegaconf
 tqdm>=4.62.0
 pyyaml>=5.4.0
-torch>=1.9.0  # Optional, for GPU support in Thompson Sampling 
+scipy
+
+# Torch and core ML libraries
+torch==2.6.0 
+
+# HuggingFace ecosystem - safe versions that don't require hf-xet
+datasets==3.0.0
+huggingface-hub==0.30.0
+transformers==4.48.0
+accelerate==1.7.0
+trl==0.17.0
+deepspeed==0.15.4
+
+# Utility libraries
+tqdm
+pydantic
+scipy
+numpy
+sigfig
+prettytable
+pebble
+submitit
+pytest
+
+# Config management
+#hydra-core
+#omegaconf
+
+# Math evaluation
+math-verify[antlr4_13_2]
+pylatexenc==2.10
+
+# Logging & experiment tracking
+wandb[cli]==0.16.6

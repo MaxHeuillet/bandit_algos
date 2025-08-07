@@ -9,18 +9,12 @@ class EpsilonGreedyAgent(BaseAgent):
     with probability 1-epsilon.
     """
 
-    def __init__(self, epsilon: float = 0.01, environment_type: str = 'bernoulli'):
+    def __init__(self, config, environment_type: str = 'bernoulli'):
         """
         Initializes the EpsilonGreedyAgent.
-
-        Args:
-            epsilon (float): The probability of exploration (choosing a random action).
-            environment_type (str): Type of environment ('bernoulli' or 'gaussian')
         """
         super().__init__("EpsilonGreedy")
-        if not (0 <= epsilon <= 1):
-            raise ValueError("Epsilon must be between 0 and 1")
-        self._epsilon = epsilon
+        self._epsilon = config.agents.epsilon_greedy.epsilon
         self._successes: Optional[np.ndarray] = None
         self._failures: Optional[np.ndarray] = None
         self.rewards: Optional[np.ndarray] = None

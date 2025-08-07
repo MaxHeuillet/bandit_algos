@@ -1,3 +1,0 @@
-name: gaussian_thompson_sampling
-n_arms: 5
-seed: 42 
