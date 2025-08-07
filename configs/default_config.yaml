@@ -15,7 +15,7 @@ agents:
     alpha: 0.1
     baseline: true
   llm_agent:
-    model: "gpt-4.1-nano"
+    model: "gpt-neo-125M"
     temperature: 0.0
     max_retries: 3
     timeout: 30

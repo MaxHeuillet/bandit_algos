@@ -20,13 +20,17 @@ class LLMAgent(BaseAgent):
 
         super().__init__("LLM")
 
+        print( os.path.join(config.scratch_model_path, config.agents.llm_agent.model) )
+
         self.model = LLM(
-            model=config.agents.llm_agent.model,
+            model=os.path.join(config.scratch_model_path, config.agents.llm_agent.model),
             # tensor_parallel_size=4,
             dtype="auto",
             trust_remote_code=True,
             enforce_eager=True,
         )
+
+        print("model", self.model)
 
         n_samples = 1
         temperature = 0.6

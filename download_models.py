@@ -16,9 +16,9 @@ def download(config):
                         resume_download=False, 
                         force_download=False)
         
-        
+
 MODELS = [ 
-        {"model_provider":"hf-internal-testing", "model_name":"tiny-random-GPT2"},
+        {"model_provider":"EleutherAI", "model_name":"gpt-neo-125M"},
            #{"model_provider":"Qwen", "model_name":"Qwen2.5-Math-1.5B-Instruct"},
            #{"model_provider":"Qwen", "model_name":"Qwen2.5-Math-7B-Instruct"},
            #{"model_provider":"Qwen", "model_name":"Qwen2.5-Math-72B-Instruct"} 

@@ -1,21 +1,15 @@
 # main.py
 import numpy as np
 import matplotlib.pyplot as plt
-from environments.bernoulli_bandit import BernoulliBandit
-from environments.gaussian_bandit import GaussianBandit, generate_configuration
-# from agents.llm_agent import LLMAgent
-from agents.epsilon import EpsilonGreedyAgent
-from agents.ucb import UCBAgent
-from agents.thompson import ThompsonSamplingAgent
+from environments import BernoulliBandit, GaussianBandit
 from utils.confidence import compute_confidence_interval
 from plots.plot_utils import plot_regret_with_confidence
 import os
 import sys
 from omegaconf import OmegaConf
-from agents.gaussian_epsilon_greedy import GaussianEpsilonGreedyAgent
-from agents.gaussian_ucb import GaussianUCBAgent
-from agents.gaussian_thompson_sampling import GaussianThompsonSamplingAgent
-from agents.ucb_kl import KLUCBAgent
+
+from agents import ( EpsilonGreedyAgent,LLMAgent,UCBAgent,ThompsonSamplingAgent, 
+                    KLUCBAgent,GaussianThompsonSamplingAgent,GaussianUCBAgent,GaussianEpsilonGreedyAgent)
 
 from agents.gradient_bandit import GradientBanditAgent
 
@@ -23,7 +17,7 @@ def load_config():
     """
     Load configuration from YAML files using OmegaConf.
     """
-    config_file = 'configurations/default_config.yaml'
+    config_file = 'configs/default_config.yaml'
     cfg = OmegaConf.load(config_file)
     return cfg
 
@@ -77,11 +71,11 @@ def main():
     env = BernoulliBandit(n_actions=len(probs), probs=probs)
 
     agents = [
-            EpsilonGreedyAgent(epsilon=0.1, environment_type='bernoulli'),
+            EpsilonGreedyAgent(config),
             # UCBAgent(),
             # ThompsonSamplingAgent(environment_type='bernoulli'),
-            GradientBanditAgent(alpha=0.1, baseline=True),
-            # LLMAgent(model="gpt-4.1-nano")
+            GradientBanditAgent(config),
+            LLMAgent(config)
             # KLUCBAgent(n_arms=len(probs)),
      ]
     print(f"Initialized {len(agents)} agents")

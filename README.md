@@ -45,8 +45,8 @@ bandit_algos/
 
 2. Create and activate a virtual environment (recommended):
    ```
-    python3.12 -m venv ~/venv
-    source ~/venv/bin/activate
+    python3.12 -m venv ~/venv2
+    source ~/venv2/bin/activate
    ```
 
 3. Install dependencies:
